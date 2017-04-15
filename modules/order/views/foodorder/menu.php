@@ -13,6 +13,13 @@ $this->params['breadcrumbs'][] = $this->title;
 $this->registerJsFile("https://unpkg.com/vue/dist/vue.js",['position'=>\yii\web\View::POS_HEAD]);
 
 ?>
+
+<style>
+ul li {
+	padding:10px;
+}
+
+</style>
 <div class="food-order-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -26,20 +33,19 @@ $this->registerJsFile("https://unpkg.com/vue/dist/vue.js",['position'=>\yii\web\
 	<?php foreach ($models as $model) : ?>
 	
 	<li> <strong><?=$model->name?></strong> <br> <?=$model->des?> <br>
-	<button v-on:click='subItem(<?=$model->id?>,<?=$model->price?>)'>Remove Me</button>
-	<button v-on:click='addItem(<?=$model->id?>,<?=$model->price?>)'>Add Me</button>
+	<button class='btn btn-primary' v-on:click='subItem(<?=$model->id?>,<?=$model->price?>)'>Remove Me</button>
+	<button class='btn btn-danger' v-on:click='addItem(<?=$model->id?>,<?=$model->price?>)'>Add Me</button>
 	</li>
 	<?php endforeach;?>
 	
-
-	<li>
-	
-	</li>
-	<li>
-	
-	</li>
 	</ul>
-	Items: {{items}} <br>
+	Items: {{items}}
+	<ul class="list-group">
+		<li class="list-group-item" v-for="item in items">
+		#{{item.itemID}} , Qty: {{item.qty}} 
+		</li>
+	</ul>
+	<br>
 	Total: {{subTotal}}
 	
 	<?php 
@@ -53,7 +59,7 @@ $this->registerJsFile("https://unpkg.com/vue/dist/vue.js",['position'=>\yii\web\
 		$items = json_decode($items);
 		print_r($items[0]);
 		
-		print_r($session['items']);
+		
 	?>
 	<?=Html::beginForm('','post')?>
 	<input type='hidden' name='items' v-bind:value="JSON.stringify(items)"></input>
@@ -102,13 +108,13 @@ $this->registerJsFile("https://unpkg.com/vue/dist/vue.js",['position'=>\yii\web\
 				},
 		subItem: function (itemID,price) {
 					var itemIndex = inArray(this.items,itemID)
-					alert(itemIndex)
+					//alert(itemIndex)
 					if(itemIndex === false) {
 					}
 					else {
 						
 						if(this.items[itemIndex].qty === 1) {
-							alert('Splice Array')
+							//alert('Splice Array')
 							this.items.splice(itemIndex,1);
 						}
 						else {

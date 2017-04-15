@@ -14,7 +14,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'sortOrder')->textInput() ?>
+	<?php
+		if ($model->isNewRecord==1) {
+			$count = count($model->find()->all())+1; 
+			$valueA = ['value'=>$count];
+		}
+		else $valueA = [];
+	?>
+    <?= $form->field($model, 'sortOrder')->textInput($valueA) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

@@ -27,8 +27,6 @@ $provider = new ActiveDataProvider([
 
 ]);
 
-echo Yii::$app->formatter->asDatetime(date("Y-m-d H:i:s"));
-
 $session = Yii::$app->session;
 $items = json_decode($session['items']);
 
@@ -36,8 +34,19 @@ $items = json_decode($session['items']);
 ?>
 
 <div class="food-order-form">
-	
-<table class="table table-bordered">
+
+<?php 
+$js = " $('#orderTable').hide(); 
+		$('#showOrder').click(function(e) {
+			$('#orderTable').slideToggle('slow'); 
+		});";
+$this->registerJs($js);		
+?> 
+
+<h4> My Order
+<button id='showOrder' class='btn btn-primary' style='margin:10px'>Show Order</button>	
+</h4>
+<div id='orderTable'><table  class="table table-bordered">
   <thead>
     <tr>
       <th>#</th>
@@ -95,7 +104,7 @@ $items = json_decode($session['items']);
 	
 </tbody>
 </table>
-
+</div>
 
 	
 	
@@ -150,7 +159,7 @@ Yii::$app->view->registerJs($js);
 ?>
 	
 	<div id='cus_get_form'>		
-	<h4> Existing Customer </h4>	
+	<h4> I am a returning customer </h4>	
 		<div class="form-inline" >
 		<?= Html::textInput('email','',['id'=>'cus_email',"placeholder"=>'email',"class"=>"form-control"]) ?>
 		<?= Html::passwordInput('pass','',['id'=>'cus_pass',"placeholder"=>'password',"class"=>"form-control"]) ?>
@@ -159,7 +168,7 @@ Yii::$app->view->registerJs($js);
 		</div>
 	</div>
 	
-	<hr style='color: grey'>
+	<hr style='color: grey;padding: 20px 0;'>
 	
 	<h4> Guest Order </h4>
 	
@@ -188,7 +197,8 @@ Yii::$app->view->registerJs($js);
 		->hiddenInput(['maxlength' => true,'value'=>$gst])
 		->label(false)?>	
 
-    <?= $form->field($model, 'total')->textInput(['maxlength' => true,'value'=>$full_total]) ?>
+    <?= $form->field($model, 'total')->hiddenInput(['value'=>$full_total])
+		->label(false)?>
 
     <?= $form->field($model, 'datetimeCreate')
 			->hiddenInput(['value'=>Yii::$app->params['datetimeSQL']])

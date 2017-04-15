@@ -57,6 +57,9 @@ $config = [
 			'orderAdmin' => [
 				'class' => 'app\modules\orderAdmin\OrderAdmin',
 			],
+			/* 'debug' => [
+				'class' => 'yii\debug\Module',
+			], */
 		],	
 	
 ];

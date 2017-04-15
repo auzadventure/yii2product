@@ -15,7 +15,8 @@ use app\models\Menucat;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?php $menuCatA = ArrayHelper::map(Menucat::find()->all(),'id','name'); ?>
+    <?php $menuCatA = ArrayHelper::map(Menucat::find()
+								->orderBy('name')->all(),'id','name'); ?>
 	
 	<?= $form->field($model, 'menuCatID')->dropDownList($menuCatA) ?>
 
@@ -25,9 +26,10 @@ use app\models\Menucat;
 
     <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+    <?php // $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+	<?php if($model->isNewRecord==1) $model->status = 1;?>
+    <?= $form->field($model, 'status')->dropDownList($model->getStatus()) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

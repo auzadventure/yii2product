@@ -1,19 +1,18 @@
 <?php
 
-
-namespace app\modules\order\controllers;
+namespace app\modules\orderAdmin\controllers;
 
 use Yii;
-use app\models\Menucat;
-use yii\data\ActiveDataProvider;
+use app\models\Menuitem;
+use app\models\MenuitemSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * MenucatController implements the CRUD actions for Menucat model.
+ * MenuitemController implements the CRUD actions for Menuitem model.
  */
-class MenucatController extends Controller
+class MenuitemController extends Controller
 {
     /**
      * @inheritdoc
@@ -31,22 +30,22 @@ class MenucatController extends Controller
     }
 
     /**
-     * Lists all Menucat models.
+     * Lists all Menuitem models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Menucat::find()->orderBy('sortOrder'),
-        ]);
+        $searchModel = new MenuitemSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single Menucat model.
+     * Displays a single Menuitem model.
      * @param integer $id
      * @return mixed
      */
@@ -58,13 +57,13 @@ class MenucatController extends Controller
     }
 
     /**
-     * Creates a new Menucat model.
+     * Creates a new Menuitem model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Menucat();
+        $model = new Menuitem();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +75,7 @@ class MenucatController extends Controller
     }
 
     /**
-     * Updates an existing Menucat model.
+     * Updates an existing Menuitem model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -95,7 +94,7 @@ class MenucatController extends Controller
     }
 
     /**
-     * Deletes an existing Menucat model.
+     * Deletes an existing Menuitem model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -108,15 +107,15 @@ class MenucatController extends Controller
     }
 
     /**
-     * Finds the Menucat model based on its primary key value.
+     * Finds the Menuitem model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Menucat the loaded model
+     * @return Menuitem the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Menucat::findOne($id)) !== null) {
+        if (($model = Menuitem::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

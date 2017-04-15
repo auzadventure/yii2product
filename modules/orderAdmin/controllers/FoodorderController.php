@@ -73,7 +73,9 @@ class FoodorderController extends \yii\web\Controller
     {
         //get all paid
 		$models = Foodorder::find()->where([
-						'status'=>Foodorder::$STATUS_SHIPPED
+						'and',
+						['status'=>Foodorder::$STATUS_SHIPPED],
+						['>','datetimeClose',"DATE_SUB(".Yii::$app->params['datetimeSQL'].",INTERVAL 10 HOUR"], 
 						])
 				  ->orderBy('datetimeClose DESC')
 				  ->all();

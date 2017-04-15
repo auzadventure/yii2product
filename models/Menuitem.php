@@ -52,7 +52,7 @@ class Menuitem extends \yii\db\ActiveRecord
             'id' => 'ID',
             'menuCatID' => 'Menu Cat ID',
             'name' => 'Name',
-            'des' => 'Des',
+            'des' => 'Description',
             'price' => 'Price',
             'image' => 'Image',
             'status' => 'Status',
@@ -69,7 +69,7 @@ class Menuitem extends \yii\db\ActiveRecord
 			0=>'hide',
 			1=>'show'
 		];
-		if($key!=null) return $a['key'];
+		if($key!=null) return $a[$key];
 		else return $a;
 	}
 	

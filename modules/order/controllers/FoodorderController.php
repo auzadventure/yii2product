@@ -115,16 +115,17 @@ class FoodorderController extends Controller
     }
 	
 	public function actionPaypal_return() {
-		$sms = new NexmoMessage ('fa39000d','bc6a995b');
+		/* $sms = new NexmoMessage ('fa39000d','bc6a995b');
 		
 		$to = '6596674603';
 		$from = 'WESVAULT';
 		$msg = 'NEXMO TEST';
-		$sms->sendText ( $to,$from,$msg );
+		$sms->sendText ( $to,$from,$msg ); */
+		return $this->render('paypalReturn');
 	}
 	
 	public function actionPaypal_cancel() {
-		
+		return $this->render('paypalCancel');
 	}
 	
 	public function actionPaypal_ipn() {
@@ -140,11 +141,20 @@ class FoodorderController extends Controller
 	
 
 			if ($verified) {
-			// 1 update paypal info 
-
+			// 1 update paypal info txn
+				$txn = 'txn123';
+				$id = '1';
+				$model = FoodOrder::findOne($id);
+				$model->txn = $txn;
+				$model->status = FoodOrder::$STATUS_PAID;
+				$model->datetimeCreate = Yii::$app->params['datetimeSQL'];
+				$model->save();
+			
 			// change status to $STATUS_PAID 
 			
 			// sms SMS 
+			
+			
 			
 			
 			

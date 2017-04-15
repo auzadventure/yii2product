@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\modules\order\controllers;
+namespace app\modules\orderAdmin\controllers;
 
 use Yii;
 use app\models\Menucat;

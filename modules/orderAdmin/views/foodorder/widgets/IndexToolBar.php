@@ -13,7 +13,11 @@ class IndexToolBar extends Widget
 
     public function init()
     {
-
+		\Yii::$app->view->registerMetaTag([
+				'http-equiv' => 'refresh',
+				'content' => '120'
+			]);
+	
     }
 
     public function run()
@@ -49,6 +53,7 @@ class IndexToolBar extends Widget
 			</div>
 		</div>	
 		<div class="col-lg-3" style='font-size:140%;padding-top:15px;'>
+		Update: 
 		<?= date(Foodorder::$timeF_long,strtotime(Yii::$app->params['datetimeSQL']))?></div>
 		
 		</div>
